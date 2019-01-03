@@ -1,6 +1,6 @@
 # JoliTypo Extra for MODX Revolution
 
-This snippet uses JoliTypo for Microtypography fix as output modifier.
+This snippet uses JoliTypo for Microtypography fix as output modifier. Install it via MODX Package Management: https://modx.com/extras/package/jolitypo
 
 # Usage
 
