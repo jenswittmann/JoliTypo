@@ -21,7 +21,7 @@ $properties = array (
     'options' => 
     array (
     ),
-    'value' => 'Ellipsis Dimension Unit Dash SmartQuotes NoSpaceBeforeComma CurlyQuote Hyphen Trademark',
+    'value' => 'Ellipsis Dimension Unit Dash SmartQuotes NoSpaceBeforeComma Hyphen Trademark',
     'lexicon' => NULL,
     'area' => '',
   ),
