@@ -8,39 +8,38 @@
     "packages": [
         {
             "name": "jolicode/jolitypo",
-            "version": "1.0.4",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jolicode/JoliTypo.git",
-                "reference": "b88e06ac94738d15dc394aff4537dd12578ff769"
+                "reference": "f9fb29367f7615766cb15311a3ce37edd2643b94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/b88e06ac94738d15dc394aff4537dd12578ff769",
-                "reference": "b88e06ac94738d15dc394aff4537dd12578ff769",
+                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/f9fb29367f7615766cb15311a3ce37edd2643b94",
+                "reference": "f9fb29367f7615766cb15311a3ce37edd2643b94",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "lib-libxml": "*",
-                "org_heigl/hyphenator": "~2.0.3",
-                "php": ">=5.6.0"
+                "org_heigl/hyphenator": "~2.6.0",
+                "php": ">=7.2.0"
             },
             "conflict": {
                 "ext-apc": "3.1.11"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.2.0",
-                "phpunit/phpunit": "~4.5",
-                "symfony/framework-bundle": "^2.3|^3.0|^4.0"
+                "friendsofphp/php-cs-fixer": "^2",
+                "symfony/framework-bundle": "^3.4.26|^4.1.12|^5.0",
+                "symfony/phpunit-bridge": "^5.0",
+                "symfony/twig-bundle": "^3.4.26|^4.1.12|^5.0",
+                "symfony/yaml": "^3.4.26|^4.1.12|^5.0"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "JoliTypo": "src/"
-                },
                 "psr-4": {
-                    "JoliTypo\\": ""
+                    "JoliTypo\\": "src/JoliTypo"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -63,29 +62,33 @@
                 "smartquote",
                 "typography"
             ],
-            "time": "2018-11-21T11:43:30+00:00"
+            "support": {
+                "issues": "https://github.com/jolicode/JoliTypo/issues",
+                "source": "https://github.com/jolicode/JoliTypo/tree/1.2.0"
+            },
+            "time": "2021-08-30T10:09:20+00:00"
         },
         {
             "name": "org_heigl/hyphenator",
-            "version": "v2.0.6",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heiglandreas/Org_Heigl_Hyphenator.git",
-                "reference": "9a8ac28f654e1ec0779caaffe57edcd2575973f6"
+                "reference": "9e21ebd14300693b1178dd080f718df721dc4f68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/9a8ac28f654e1ec0779caaffe57edcd2575973f6",
-                "reference": "9a8ac28f654e1ec0779caaffe57edcd2575973f6",
+                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/9e21ebd14300693b1178dd080f718df721dc4f68",
+                "reference": "9e21ebd14300693b1178dd080f718df721dc4f68",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": "^5.3||^7.0"
+                "php": "^7.2||^8.0"
             },
             "require-dev": {
-                "mockery/mockery": "^0.9",
-                "phpunit/phpunit": "^4.8||^5.3"
+                "mockery/mockery": "^1.2",
+                "phpunit/phpunit": "^8.0||^9.0"
             },
             "type": "library",
             "autoload": {
@@ -111,7 +114,11 @@
                 "hyphenate",
                 "hyphenation"
             ],
-            "time": "2017-03-20T20:12:10+00:00"
+            "support": {
+                "issues": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/issues",
+                "source": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/tree/v2.6.1"
+            },
+            "time": "2020-12-22T15:12:35+00:00"
         }
     ],
     "packages-dev": [],
@@ -121,5 +128,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
 }

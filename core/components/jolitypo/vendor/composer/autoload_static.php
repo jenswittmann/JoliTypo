@@ -24,18 +24,12 @@ class ComposerStaticInit0cfc5f780aaf6b70f798b9197a954f14
         ),
         'JoliTypo\\' => 
         array (
-            0 => __DIR__ . '/..' . '/jolicode/jolitypo',
+            0 => __DIR__ . '/..' . '/jolicode/jolitypo/src/JoliTypo',
         ),
     );
 
-    public static $prefixesPsr0 = array (
-        'J' => 
-        array (
-            'JoliTypo' => 
-            array (
-                0 => __DIR__ . '/..' . '/jolicode/jolitypo/src',
-            ),
-        ),
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -43,7 +37,7 @@ class ComposerStaticInit0cfc5f780aaf6b70f798b9197a954f14
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit0cfc5f780aaf6b70f798b9197a954f14::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit0cfc5f780aaf6b70f798b9197a954f14::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0cfc5f780aaf6b70f798b9197a954f14::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit0cfc5f780aaf6b70f798b9197a954f14::$classMap;
 
         }, null, ClassLoader::class);
     }

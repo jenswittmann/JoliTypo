@@ -51,9 +51,9 @@ class DictionaryRegistry implements \Iterator, \Countable
     /**
      * Storage for the Dictionaries.
      *
-     * @var Dictionary[] $_registry
+     * @var Dictionary[] $registry
      */
-    protected $_registry = array();
+    protected $registry = array();
 
     /**
      * Add an item to the registry.
@@ -64,27 +64,41 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function add(Dictionary $dict)
     {
-        if (! in_array($dict, $this->_registry)) {
-            $this->_registry[] = $dict;
+        if (! in_array($dict, $this->registry)) {
+            $this->registry[] = $dict;
         }
 
         return $this;
     }
 
     /**
-     * Get a dictionary entry by it's key
+     * Get a dictionary entry by its key
      *
      * @param mixed $key The key to retrieve the Dictionary for
      *
-     * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
+     * @return Dictionary|null
      */
     public function getDictionaryWithKey($key)
     {
-        if (array_key_exists($key, $this->_registry)) {
-            return $this->_registry[$key];
+        if (array_key_exists($key, $this->registry)) {
+            return $this->registry[$key];
         }
 
         return null;
+    }
+
+    /**
+     * Get an array of hyphenation-patterns for a given word.
+     *
+     * @deprecated use getHyphenationPatterns() instead
+     *
+     * @param string $word The word to get the patterns for.
+     *
+     * @return array
+     */
+    public function getHyphenationPattterns($word)
+    {
+        return $this->getHyphenationPatterns($word);
     }
 
     /**
@@ -94,14 +108,14 @@ class DictionaryRegistry implements \Iterator, \Countable
      *
      * @return array
      */
-    public function getHyphenationPattterns($word)
+    public function getHyphenationPatterns($word)
     {
-        $pattern = array();
+        $pattern = array(array());
         foreach ($this as $dictionary) {
-            $pattern = array_merge($pattern, $dictionary->getPatternsForWord($word));
+            $pattern[] = $dictionary->getPatternsForWord($word);
         }
 
-        return $pattern;
+        return array_merge(...$pattern);
     }
 
     /**
@@ -113,7 +127,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function rewind()
     {
-        reset($this->_registry);
+        reset($this->registry);
     }
 
     /**
@@ -125,7 +139,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function current()
     {
-        return current($this->_registry);
+        return current($this->registry);
     }
 
     /**
@@ -137,7 +151,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function key()
     {
-        return key($this->_registry);
+        return key($this->registry);
     }
 
     /**
@@ -149,7 +163,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function count()
     {
-        return count($this->_registry);
+        return count($this->registry);
     }
 
     /**
@@ -161,7 +175,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function next()
     {
-        next($this->_registry);
+        next($this->registry);
     }
 
     /**
@@ -173,7 +187,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function valid()
     {
-        if (false === current($this->_registry)) {
+        if (false === current($this->registry)) {
             return false;
         }
 

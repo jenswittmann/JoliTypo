@@ -31,11 +31,10 @@
 
 namespace Org\Heigl\HyphenatorTest\Tokenizer;
 
-use \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
-use \Org\Heigl\Hyphenator\Tokenizer\Token;
-use \Org\Heigl\Hyphenator\Tokenizer\WordToken;
-use \Org\Heigl\Hyphenator\Tokenizer\NonWordToken;
-use \Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken;
+use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
+use Org\Heigl\Hyphenator\Tokenizer\Token;
+use Org\Heigl\Hyphenator\Tokenizer\WordToken;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Token
@@ -48,19 +47,21 @@ use \Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class TokenRegistryTest extends \PHPUnit_Framework_TestCase
+class TokenRegistryTest extends TestCase
 {
     public function testAddingToken()
     {
-        $w = new Token('a');
         $t = new WordToken('a');
         $t1 = new WordToken('a');
         $r = new TokenRegistry();
-        $this->assertAttributeEquals(array(), '_registry', $r);
+        self::assertEquals(0, $r->count());
         $this->assertSame($r, $r->add($t));
-        $this->assertAttributeEquals(array($t), '_registry', $r);
+        self::assertEquals(1, $r->count());
+        self::assertSame($t, $r->getTokenWithKey(0));
         $this->assertSame($r, $r->add($t1));
-        $this->assertAttributeEquals(array($t,$t1), '_registry', $r);
+        self::assertEquals(2, $r->count());
+        self::assertSame($t, $r->getTokenWithKey(0));
+        self::assertSame($t1, $r->getTokenWithKey(1));
     }
 
     public function testGettingToken()
@@ -115,10 +116,20 @@ class TokenRegistryTest extends \PHPUnit_Framework_TestCase
         $r->add($wt1);
         $r->add($wt2);
         $r->add($wt3);
-        $this->assertAttributeEquals(array($wt1, $wt2, $wt3), '_registry', $r);
+        self::assertEquals(3, $r->count());
+        self::assertSame($wt1, $r->getTokenWithKey(0));
+        self::assertSame($wt2, $r->getTokenWithKey(1));
+        self::assertSame($wt3, $r->getTokenWithKey(2));
         $r->replace($wt4, array());
-        $this->assertAttributeEquals(array($wt1, $wt2, $wt3), '_registry', $r);
+        self::assertEquals(3, $r->count());
+        self::assertSame($wt1, $r->getTokenWithKey(0));
+        self::assertSame($wt2, $r->getTokenWithKey(1));
+        self::assertSame($wt3, $r->getTokenWithKey(2));
         $r->replace($wt2, array( $wt4, 'foo', $wt5));
-        $this->assertAttributeEquals(array($wt1, $wt4, $wt5, $wt3), '_registry', $r);
+        self::assertEquals(4, $r->count());
+        self::assertSame($wt1, $r->getTokenWithKey(0));
+        self::assertSame($wt4, $r->getTokenWithKey(1));
+        self::assertSame($wt5, $r->getTokenWithKey(2));
+        self::assertSame($wt3, $r->getTokenWithKey(3));
     }
 }

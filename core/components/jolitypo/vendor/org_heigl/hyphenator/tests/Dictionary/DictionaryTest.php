@@ -32,6 +32,8 @@
 namespace Org\Heigl\HyphenatorTest\Dictionary;
 
 use Org\Heigl\Hyphenator\Dictionary\Dictionary;
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
@@ -44,13 +46,16 @@ use Org\Heigl\Hyphenator\Dictionary\Dictionary;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class DictionaryTest extends \PHPUnit_Framework_TestCase
+class DictionaryTest extends TestCase
 {
     public function testSettingDefaultFilePath()
     {
-        $this->assertAttributeEquals('', '_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
+        $rc = new ReflectionClass(Dictionary::class);
+        $rp = $rc->getProperty('fileLocation');
+        $rp->setAccessible(true);
+        TestCase::assertSame('', $rp->getValue());
         Dictionary::setFileLocation('foo');
-        $this->assertAttributeEquals('foo', '_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
+        TestCase::assertSame('foo', $rp->getValue());
     }
 
     public function testParsingOnDictionaryCreationDoesNotWorks()
@@ -65,7 +70,12 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
     {
         Dictionary::setFileLocation(__DIR__ . '/../share/test3/files/dictionaries');
         $dict = Dictionary::factory('de-de');
-        $this->assertAttributeNotEquals(array(), '_dictionary', $dict);
+
+        $rc = new ReflectionClass(Dictionary::class);
+        $rp = $rc->getProperty('dictionary');
+        $rp->setAccessible(true);
+
+        TestCase::assertNotSame([], $rp->getValue($dict));
     }
 
     public function testGettingPatterns()
@@ -78,16 +88,24 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingPatterns()
     {
+        $rc = new ReflectionClass(Dictionary::class);
+        $rp = $rc->getProperty('dictionary');
+        $rp->setAccessible(true);
+
         $dictionary = new Dictionary();
         $dictionary->addPattern('test', '01234');
-        $this->assertAttributeEquals(array('test'=>'01234'), '_dictionary', $dictionary);
+        TestCase::assertSame(['test' => '01234'], $rp->getValue($dictionary));
     }
 
     public function testCreationOfNotExistentLocale()
     {
+        $rc = new ReflectionClass(Dictionary::class);
+        $rp = $rc->getProperty('dictionary');
+        $rp->setAccessible(true);
+
         Dictionary::setFileLocation(__DIR__ . '/share/');
         $dictionary = Dictionary::factory('xx_XX');
-        $this->assertAttributeEquals(array(), '_dictionary', $dictionary);
+        TestCase::assertSame([], $rp->getValue($dictionary));
         $result = $dictionary->getPatternsForWord('Donaudampfschifffahrtskapitänsmütze');
         $this->assertEquals(array(), $result);
     }
@@ -117,7 +135,7 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
     public function testLocaleUnification($parameter, $expected)
     {
         $obj = new \Org\Heigl\Hyphenator\Dictionary\Dictionary();
-        $method = \UnitTestHelper::getMethod($obj, '_unifyLocale');
+        $method = \UnitTestHelper::getMethod($obj, 'unifyLocale');
         $result = $method->invoke($obj, $parameter);
 
         $this->assertEquals($expected, $result);

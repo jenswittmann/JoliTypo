@@ -32,9 +32,8 @@
 
 namespace Org\Heigl\HyphenatorTest\Filter;
 
-use \Org\Heigl\Hyphenator\Filter\Filter;
-use \Org\Heigl\Hyphenator\Options;
-use \Org\Heigl\Hyphenator\Tokenizer as t;
+use Org\Heigl\Hyphenator\Options;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Token
@@ -48,27 +47,15 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class FilterTest extends \PHPUnit_Framework_TestCase
+class FilterTest extends TestCase
 {
     public function testSettingOptions()
     {
         $t = new Test2Filter();
         $o = new Options();
-        $this->assertAttributeEquals(null, '_options', $t);
-        $this->assertSame($t, $t->setOptions($o));
-        $this->assertAttributeSame($o, '_options', $t);
-        $this->assertSame($o, $t->getOptions());
-    }
-}
 
-class Test2Filter extends Filter
-{
-    public function run(t\TokenRegistry $tokens)
-    {
-        return $tokens;
-    }
-    protected function _concatenate(t\TokenREgistry $tokens)
-    {
-        return $tokens;
+        self::assertNotSame($o, $t->getOptions());
+        $this->assertSame($t, $t->setOptions($o));
+        $this->assertSame($o, $t->getOptions());
     }
 }

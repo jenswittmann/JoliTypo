@@ -31,7 +31,9 @@
 
 namespace Org\Heigl\HyphenatorTest\Tokenizer;
 
-use \Org\Heigl\Hyphenator\Tokenizer\WordToken;
+use Org\Heigl\Hyphenator\Hyphenator;
+use Org\Heigl\Hyphenator\Tokenizer\WordToken;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Token
@@ -44,16 +46,16 @@ use \Org\Heigl\Hyphenator\Tokenizer\WordToken;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class WordTokenTest extends \PHPUnit_Framework_TestCase
+class WordTokenTest extends TestCase
 {
     public function testWordTokenCanAddPattern()
     {
         $t = new WordToken('test');
-        $this->assertAttributeEquals(array(), '_pattern', $t);
+        $this->assertEquals('00000', $t->getMergedPattern(Hyphenator::QUALITY_HIGHEST));
         $t->addPattern(array('te'=>'012','es'=>'234'));
-        $this->assertAttributeEquals(array('te'=>'012','es'=>'234'), '_pattern', $t);
+        $this->assertEquals('02340', $t->getMergedPattern(Hyphenator::QUALITY_HIGHEST));
         $t->addPattern(array('st'=>'234','es'=>'345'));
-        $this->assertAttributeEquals(array('te'=>'012','es'=>'345','st'=>'234'), '_pattern', $t);
+        $this->assertEquals('03454', $t->getMergedPattern(Hyphenator::QUALITY_HIGHEST));
     }
 
     /**
@@ -63,7 +65,6 @@ class WordTokenTest extends \PHPUnit_Framework_TestCase
     {
         $t = new WordToken($word);
         $t->addPattern($pattern);
-        $this->assertAttributeEquals($pattern, '_pattern', $t);
         $this->assertEquals($result, $t->getMergedPattern($quality));
     }
 

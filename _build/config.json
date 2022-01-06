@@ -1,0 +1,42 @@
+{
+    "name": "JoliTypo",
+    "lowCaseName": "jolitypo",
+    "description": "JoliTypo  Microtypography as output modifer for MODX",
+    "author": "Jens Wittmann",
+    "version": "1.0.0-pl",
+    "package":{
+        "elements": {
+            "snippets": [
+                {
+                    "name": "jolitypo",
+                    "file": "jolitypo.snippet.php"
+                }
+            ]
+        },
+        "systemSettings": [
+            {
+                "key": "customReplaces",
+                "type": "textarea",
+                "area": "default",
+                "value": ""
+            },
+            {
+                "key": "locale",
+                "type": "textfield",
+                "area": "default",
+                "value": "de_DE"
+            },            
+            {
+                "key": "standardFixers",
+                "type": "textfield",
+                "area": "default",
+                "value": "Ellipsis Dimension Dash SmartQuotes NoSpaceBeforeComma Trademark"
+            }
+        ]
+    },
+    "build": {
+        "readme": "docs/readme.txt",
+        "license": "docs/license.txt",
+        "changelog": "docs/changelog.txt"
+    }
+}

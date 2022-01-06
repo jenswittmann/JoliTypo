@@ -34,7 +34,7 @@
 
 namespace Org\Heigl\Hyphenator\Filter;
 
-use \Org\Heigl\Hyphenator\Tokenizer as t;
+use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
 
 /**
  * This class provides a filter for non-standard hyphenation-patterns
@@ -52,15 +52,15 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
 class CustomMarkupFilter extends Filter
 {
     /**
-     * Exteends the abstract Filter::run()
+     * Extends the abstract Filter::run()
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see Filter::run()
+     * @return TokenRegistry
      */
-    public function run(t\TokenRegistry $tokens)
+    public function run(TokenRegistry $tokens)
     {
         return $tokens;
     }
@@ -68,13 +68,13 @@ class CustomMarkupFilter extends Filter
     /**
      * Implements interface Filter
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see Filter::run()
+     * @return mixed
      */
-    protected function _concatenate(t\TokenRegistry $tokens)
+    protected function doConcatenate(TokenRegistry $tokens)
     {
         $string = '';
         foreach ($tokens as $token) {

@@ -51,64 +51,62 @@ class Token
     /**
      * The content of the token.
      *
-     * @var \string $_content
+     * @var string $content
      */
-    protected $_content = '';
+    protected $content = '';
 
     /**
      * The filtered content of the token.
      *
-     * @var \string $_filteredContent
+     * @var string $filteredContent
      */
-    protected $_filteredContent = '';
+    protected $filteredContent = '';
 
     /**
      * The hyphenated token.
      *
-     * @var \array $_hyphenatedContent
+     * @var array $hyphenatedContent
      */
-    protected $_hyphenatedContent = array();
+    protected $hyphenatedContent = array();
 
     /**
      * The hyphenation patterns for this token.
      *
-     * @var \array $_pattern
+     * @var array $pattern
      */
-    protected $_pattern = array();
+    protected $pattern = array();
 
     /**
      * Create the Token
      *
-     * @param \string $content The content to be stored in the token.
-     *
-     * @return \void
+     * @param string $content The content to be stored in the token.
      */
     public function __construct($content)
     {
-        $this->_content = $content;
-        $this->_hyphenatedContent = array( $content );
+        $this->content           = $content;
+        $this->hyphenatedContent = array( $content );
     }
 
     /**
      * Get the tokens content
      *
-     * @return \string
+     * @return string
      */
     public function get()
     {
-        return $this->_content;
+        return $this->content;
     }
 
     /**
      * Set the tokens hyphenated content
      *
-     * @param \array $hyphenatedContent all possible hyphenations
+     * @param array $hyphenatedContent all possible hyphenations
      *
      * @return Token
      */
     public function setHyphenatedContent(array $hyphenatedContent)
     {
-        $this->_hyphenatedContent = $hyphenatedContent;
+        $this->hyphenatedContent = $hyphenatedContent;
 
         return $this;
     }
@@ -116,17 +114,17 @@ class Token
     /**
      * Get the hyphenated content
      *
-     * @return \array
+     * @return array
      */
     public function getHyphenatedContent()
     {
-        return $this->_hyphenatedContent;
+        return $this->hyphenatedContent;
     }
 
     /**
      * Get the type of this token
      *
-     * @return \string
+     * @return string
      */
     public function getType()
     {
@@ -136,27 +134,27 @@ class Token
     /**
      * Get the already filtered content of the token.
      *
-     * @return \string
+     * @return string
      */
     public function getFilteredContent()
     {
-        if (! $this->_filteredContent) {
-            return $this->_content;
+        if (! $this->filteredContent) {
+            return $this->content;
         }
 
-        return $this->_filteredContent;
+        return $this->filteredContent;
     }
 
     /**
      * Set the filtered content
      *
-     * @param \string $content The Filtered Content
+     * @param string $content The Filtered Content
      *
      * @return Token
      */
     public function setFilteredContent($content)
     {
-        $this->_filteredContent = $content;
+        $this->filteredContent = $content;
 
         return $this;
     }
@@ -164,10 +162,10 @@ class Token
     /**
      * Get the length of the contained (unhyphenated) token
      *
-     * @return \int
+     * @return int
      */
     public function length()
     {
-        return mb_strlen($this->_content);
+        return mb_strlen($this->content);
     }
 }

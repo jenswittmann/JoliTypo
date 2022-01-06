@@ -33,6 +33,8 @@
 
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
+use Org\Heigl\Hyphenator\Hyphenator;
+
 /**
  * This Class describes a Token representing a word
  *
@@ -51,20 +53,20 @@ class WordToken extends Token
     /**
      * The hyphenation patterns for this token.
      *
-     * @var \array $_pattern
+     * @var array $_pattern
      */
-    protected $_pattern = array();
+    protected $pattern = array();
 
     /**
      * Add a substring=>pattern array to the already existing ones
      *
-     * @param \array $pattern The new patterns to add
+     * @param array $pattern The new patterns to add
      *
-     * @return Token
+     * @return self
      */
     public function addPattern(array $pattern)
     {
-        $this->_pattern = array_merge($this->_pattern, $pattern);
+        $this->pattern = array_merge($this->pattern, $pattern);
 
         return $this;
     }
@@ -74,11 +76,11 @@ class WordToken extends Token
      *
      * THis will prepend and append a dot to the content for better hyphenation
      *
-     * @return \string
+     * @return string
      */
     public function getHyphenateContent()
     {
-        return '.' . $this->_content . '.';
+        return '.' . $this->content . '.';
     }
 
     /**
@@ -86,15 +88,15 @@ class WordToken extends Token
      *
      * This is done using the given quality value.
      *
-     * @param \int $quality The hyphenation quality to use
+     * @param int $quality The hyphenation quality to use
      *
-     * @return Token
+     * @return string
      */
-    public function getMergedPattern($quality = \Org\Heigl\Hyphenator\Hyphenator::QUALITY_HIGHEST)
+    public function getMergedPattern($quality = Hyphenator::QUALITY_HIGHEST)
     {
         $content = $this->getHyphenateContent();
         $endPattern = str_repeat('0', mb_strlen($content)+1);
-        foreach ($this->_pattern as $string => $pattern) {
+        foreach ($this->pattern as $string => $pattern) {
             $strStart = -1;
             while (false !== $strStart = @mb_strpos($content, $string, $strStart + 1)) {
                 $strLen   = mb_strlen($string);

@@ -34,7 +34,7 @@
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
 /**
- * Use Punktuation to split any input into tokens
+ * Use Punctuation to split any input into tokens
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -52,9 +52,9 @@ class PunctuationTokenizer implements Tokenizer
     /**
      * The tokens to be handled by this tokenizer as an array.
      *
-     * @var string $_tokens
+     * @var string[] $tokens
      */
-    protected $_tokens = array(
+    protected $tokens = [
         '.',
         '?',
         '!',
@@ -93,7 +93,7 @@ class PunctuationTokenizer implements Tokenizer
         "'",
         '-',
         '_',
-    );
+    ];
 
     /**
      * Split the given input into tokens using punktuation marks as splitter
@@ -101,10 +101,10 @@ class PunctuationTokenizer implements Tokenizer
      * The input can be a string or a tokenRegistry. If the input is a
      * TokenRegistry, each item will be tokenized.
      *
-     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
+     * @param string|TokenRegistry $input The
      * input to be tokenized
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     * @return TokenRegistry
      */
     public function run($input)
     {
@@ -112,13 +112,10 @@ class PunctuationTokenizer implements Tokenizer
             // Tokenize a TokenRegistry
             $f = clone($input);
             foreach ($input as $token) {
-                if ($token instanceof WhitespaceToken) {
+                if (! $token instanceof WordToken) {
                     continue;
                 }
-                if ($token instanceof NonWordToken) {
-                    continue;
-                }
-                $newTokens = $this->_tokenize($token->get());
+                $newTokens = $this->tokenize($token->get());
                 if ($newTokens == array($token)) {
                     continue;
                 }
@@ -129,7 +126,7 @@ class PunctuationTokenizer implements Tokenizer
         }
 
         // Tokenize a simple string.
-        $array =  $this->_tokenize($input);
+        $array =  $this->tokenize($input);
         $registry = new TokenRegistry();
         foreach ($array as $item) {
             $registry->add($item);
@@ -144,20 +141,20 @@ class PunctuationTokenizer implements Tokenizer
      * Each whitespace is placed in a WhitespaceToken and everything else is
      * placed in a WordToken-Object
      *
-     * @param \string $input The String to tokenize
+     * @param string $input The String to tokenize
      *
-     * @return Token
+     * @return Token[]
      */
-    protected function _tokenize($input)
+    private function tokenize($input)
     {
         $tokens = array();
-        $signs = '\\' . implode('\\', $this->_tokens);
+        $signs = '\\' . implode('\\', $this->tokens);
         $splits = preg_split('/([' . $signs . ']+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
         foreach ($splits as $split) {
             if ('' == $split) {
                 continue;
             }
-            if (in_array(mb_substr($split, 0, 1), $this->_tokens)) {
+            if (in_array(mb_substr($split, 0, 1), $this->tokens)) {
                 $tokens[] = new NonWordToken($split);
                 continue;
             }

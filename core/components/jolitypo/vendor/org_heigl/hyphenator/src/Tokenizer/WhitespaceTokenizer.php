@@ -48,6 +48,9 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  */
 class WhitespaceTokenizer implements Tokenizer
 {
+    /**
+     * @var string[]
+     */
     protected $whitespaces = array(
       '\s',           // white space
       "\xE2\x80\xAF", // non-breaking thin white space
@@ -60,23 +63,20 @@ class WhitespaceTokenizer implements Tokenizer
      * The input can be a string or a tokenRegistry. If the input is a
      * TokenRegistry, each item will be tokenized.
      *
-     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
+     * @param string|TokenRegistry $input The
      * input to be tokenized
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     * @return TokenRegistry
      */
     public function run($input)
     {
         if ($input instanceof TokenRegistry) {
             // Tokenize a TokenRegistry
             foreach ($input as $token) {
-                if ($token instanceof WhitespaceToken) {
+                if (! $token instanceof WordToken) {
                     continue;
                 }
-                if ($token instanceof NonWordToken) {
-                    continue;
-                }
-                $newTokens = $this->_tokenize($token->get());
+                $newTokens = $this->tokenize($token->get());
                 if ($newTokens == array($token)) {
                     continue;
                 }
@@ -87,7 +87,7 @@ class WhitespaceTokenizer implements Tokenizer
         }
 
         // Tokenize a simple string.
-        $array =  $this->_tokenize($input);
+        $array =  $this->tokenize($input);
         $registry = new TokenRegistry();
         foreach ($array as $item) {
             $registry->add($item);
@@ -104,14 +104,18 @@ class WhitespaceTokenizer implements Tokenizer
      *
      * @param string $input The String to tokenize
      *
-     * @return Token
+     * @return Token[]
      */
-    protected function _tokenize($input)
+    private function tokenize($input)
     {
         $tokens = array();
         $splits = preg_split("/([".implode("", $this->whitespaces)."]+)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         foreach ($splits as $split) {
+            if ($split === '') {
+                $tokens[] = new EmptyToken($split);
+                continue;
+            }
             if (preg_match("/^[".implode("", $this->whitespaces)."]+$/um", $split)) {
                 $tokens[] = new WhitespaceToken($split);
                 continue;

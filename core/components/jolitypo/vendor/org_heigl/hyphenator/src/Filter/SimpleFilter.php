@@ -34,7 +34,8 @@
 
 namespace Org\Heigl\Hyphenator\Filter;
 
-use \Org\Heigl\Hyphenator\Tokenizer as t;
+use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
+use Org\Heigl\Hyphenator\Tokenizer\WordToken;
 
 /**
  * This class provides a filter for non-standard hyphenation-patterns
@@ -55,29 +56,30 @@ class SimpleFilter extends Filter
     /**
      * Implements interface Filter
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see Filter::run()
+     * @return TokenRegistry
      */
-    public function run(t\TokenRegistry $tokens)
+    public function run(TokenRegistry $tokens)
     {
         foreach ($tokens as $token) {
-            if (! $token instanceof t\WordToken) {
+            if (! $token instanceof WordToken) {
                 continue;
             }
             $string = $token->getFilteredContent();
-            $pattern = $token->getMergedPattern();
+            $pattern = $token->getMergedPattern($this->options->getQuality());
             $length  = $token->length();
             $lastOne = 0;
             $result = array();
+
             for ($i = 1; $i <= $length; $i++) {
                 $currPattern = mb_substr($pattern, $i, 1);
-                if ($i < $this->_options->getLeftMin()) {
+                if ($i < $this->options->getLeftMin()) {
                     continue;
                 }
-                if ($i > $length - $this->_options->getRightMin()) {
+                if ($i > ($length - $this->options->getRightMin())) {
                     continue;
                 }
                 if (0 == $currPattern) {
@@ -86,12 +88,12 @@ class SimpleFilter extends Filter
                 if (0 === (int) $currPattern % 2) {
                     continue;
                 }
-                $sylable = mb_substr($string, $lastOne, $i-$lastOne);
+                $syllable = mb_substr($string, $lastOne, $i-$lastOne);
                 $lastOne = $i;
-                $result[] = $sylable;
+                $result[] = $syllable;
             }
             $result [] = mb_substr($string, $lastOne);
-            $token->setFilteredContent(implode($this->_options->getHyphen(), $result));
+            $token->setFilteredContent(implode($this->options->getHyphen(), $result));
         }
 
         return $tokens;
@@ -100,13 +102,13 @@ class SimpleFilter extends Filter
     /**
      * Implements interface Filter
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see Filter::run()
+     * @return mixed
      */
-    protected function _concatenate(t\TokenRegistry $tokens)
+    protected function doConcatenate(TokenRegistry $tokens)
     {
         $string = '';
         foreach ($tokens as $token) {

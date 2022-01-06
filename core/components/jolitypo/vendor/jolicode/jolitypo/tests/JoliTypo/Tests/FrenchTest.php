@@ -10,10 +10,11 @@
 namespace JoliTypo\Tests;
 
 use JoliTypo\Fixer;
+use PHPUnit\Framework\TestCase;
 
-class FrenchTest extends \PHPUnit_Framework_TestCase
+class FrenchTest extends TestCase
 {
-    private $fr_fixers = array('Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark');
+    private $fr_fixers = ['Unit', 'Ellipsis', 'Dimension', 'Dash', 'SmartQuotes', 'FrenchNoBreakSpace', 'CurlyQuote', 'Hyphen', 'Trademark'];
 
     const TOFIX = <<<TOFIX
 <p>Ceci est à remplacer par une fâble :p</p>
@@ -58,7 +59,7 @@ content&nbsp;&raquo; de t&rsquo;avoir <a href="http://coucou">invit&eacute;</a>&
 
 <p>Les tr&eacute;s long mots sont tronqu&eacute;s, comme &laquo;&nbsp;rensei&shy;gne&shy;ments&nbsp;&raquo; par exemple.</p>
 
-<p>Du HTML dans une cita&shy;tion&nbsp;: &laquo;&nbsp;Je suis <strong>fan</strong> de JoliTypo&nbsp;&raquo; pose probl&egrave;me.</p>
+<p>Du HTML dans une cita&shy;tion&nbsp;: &laquo;&nbsp;Je suis <strong>fan</strong> de Joli&shy;Typo&nbsp;&raquo; pose probl&egrave;me.</p>
 
 <p>Une autre exemple&nbsp;: &laquo;&nbsp;<strong>Cita&shy;tion forte&#8239;!</strong>&nbsp;&raquo;.</p>
 FIXED;
@@ -179,7 +180,7 @@ HTML;
 <p><a href="http://foobar.dev/storage/image-1493026187479.gif" target="_self"><img src="http://foobar.dev/storage/image-1493026187479.gif" alt="file"></a></p>
 HTML;
 
-        $this->assertNotContains("&shy;", $fixer->fix($to_fix));
-        $this->assertNotContains(Fixer::SHY, $fixer->fix($to_fix));
+        $this->assertStringNotContainsString('&shy;', $fixer->fix($to_fix));
+        $this->assertStringNotContainsString(Fixer::SHY, $fixer->fix($to_fix));
     }
 }

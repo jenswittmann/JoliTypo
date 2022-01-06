@@ -33,8 +33,13 @@
 
 namespace Org\Heigl\Hyphenator\Dictionary;
 
+use RuntimeException;
+use function mb_substr;
+use function parse_ini_file;
+use function str_replace;
+
 /**
- * This class provides a generic dictionary contianing hyphenation-patterns
+ * This class provides a generic dictionary containing hyphenation-patterns
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -51,16 +56,16 @@ class Dictionary
     /**
      * The internal storage for the dictionary.
      *
-     * @var array $_dictionary
+     * @var array $dictionary
      */
-    protected $_dictionary = array();
+    private $dictionary = array();
 
     /**
      * Where to look for the basic files.
      *
-     * @var string $_fileLocation
+     * @var string $fileLocation
      */
-    protected static $_fileLocation = '';
+    private static $fileLocation = '';
 
     /**
      * Set the file-location.
@@ -71,16 +76,7 @@ class Dictionary
      */
     public static function setFileLocation($fileLocation)
     {
-        self::$_fileLocation = $fileLocation;
-    }
-
-    /**
-     * Create a new Instance of the Dictionary
-     *
-     * @return void
-     */
-    public function __construct()
-    {
+        self::$fileLocation = $fileLocation;
     }
 
     /**
@@ -98,6 +94,29 @@ class Dictionary
         return $dict;
     }
 
+    public static function fromLocale($locale): Dictionary
+    {
+        $dictionary = new Dictionary();
+        $dictionary->load($locale);
+
+        return $dictionary;
+    }
+
+    public static function fromFile(string $file): Dictionary
+    {
+        if (! is_file($file)) {
+            throw new RuntimeException(sprintf("The file \"%s\" is not readable", $file));
+        }
+
+        $dictionary = new Dictionary();
+
+        foreach (parse_ini_file($file) as $key => $val) {
+            $dictionary->dictionary[str_replace('@:', '', $key)] = $val;
+        }
+
+        return $dictionary;
+    }
+
     /**
      * Load a given locale-file as base for the dictionary
      *
@@ -107,21 +126,21 @@ class Dictionary
      */
     public function load($locale)
     {
-        $locale = $this->_unifyLocale($locale);
-        $file = self::$_fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
-        $this->_dictionary = array();
+        $locale           = $this->unifyLocale($locale);
+        $file             = self::$fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
+        $this->dictionary = array();
         if (! file_exists(realpath($file))) {
             return $this;
         }
         foreach (parse_ini_file($file) as $key => $val) {
-            $this->_dictionary[str_replace('@:', '', $key)] = $val;
+            $this->dictionary[str_replace('@:', '', $key)] = $val;
         }
 
         return $this;
     }
 
     /**
-     * parse a dictionary-file to create an ini-file from it.
+     * Parse a dictionary-file to create an ini-file from it.
      *
      * @param string $locale Parse the file for the given locale
      *
@@ -130,7 +149,7 @@ class Dictionary
      */
     public static function parseFile($locale)
     {
-        $path = self::$_fileLocation . DIRECTORY_SEPARATOR;
+        $path = self::$fileLocation . DIRECTORY_SEPARATOR;
         $file = $path . 'hyph_' . $locale . '.dic';
         if (! file_Exists($file)) {
             throw new \Org\Heigl\Hyphenator\Exception\PathNotFoundException('The given Path does not exist');
@@ -187,10 +206,11 @@ class Dictionary
         for ($i = 0; $i <= $strlen; $i ++) {
             for ($j = 2; $j <= ($strlen-$i); $j++) {
                 $substr = mb_substr($word, $i, $j);
-                if (! isset($this->_dictionary[$substr])) {
+                $lowerSubstring = mb_strtolower($substr);
+                if (! isset($this->dictionary[$lowerSubstring])) {
                     continue;
                 }
-                $return[$substr] = $this->_dictionary[$substr];
+                $return[$substr] = $this->dictionary[$lowerSubstring];
             }
         }
 
@@ -200,26 +220,26 @@ class Dictionary
     /**
      * Manually add or overwrite a pattern
      *
-     * @param string $string  String to be maatched
+     * @param string $string  String to be matched
      * @param string $pattern Numerical hyphenation-pattern
      *
      * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
      */
-    public function addPAttern($string, $pattern)
+    public function addPattern($string, $pattern)
     {
-        $this->_dictionary[$string] = $pattern;
+        $this->dictionary[$string] = $pattern;
 
         return $this;
     }
 
     /**
-     * Unify the given locale to a defsult format.
+     * Unify the given locale to a default format.
      *
-     * For that in a 2 by 2 format the whole string is splited, the first part
-     * lowercased, the sewcond part upercased and concatenated with n under-
+     * For that in a 2 by 2 format the whole string is split, the first part
+     * lowercased, the second part uppercased and concatenated with n under-
      * score.
      *
-     * a 2letter locae will simply be lowercased.
+     * a 2-letter locale will simply be lowercased.
      *
      * everything else will be returned AS IS
      *
@@ -227,7 +247,7 @@ class Dictionary
      *
      * @return string
      */
-    protected function _unifyLocale($locale)
+    private function unifyLocale($locale)
     {
         if (2 == strlen($locale)) {
             return strtolower($locale);

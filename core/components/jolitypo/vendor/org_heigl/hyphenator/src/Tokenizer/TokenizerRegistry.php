@@ -33,6 +33,9 @@
 
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
+use Countable;
+use Iterator;
+
 /**
  * This class provides a registry for storing multiple Tokenizers
  *
@@ -46,43 +49,42 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
  */
-class TokenizerRegistry implements \Iterator, \Countable
+class TokenizerRegistry implements Iterator, Countable
 {
     /**
      * Storage for the Tokenizers.
      *
-     * @var \Org\Heigl\Hyphenator\Tokenizer\Tokenizer[] $_registry
+     * @var Tokenizer[] $_registry
      */
-    protected $_registry = array();
+    private $registry = array();
 
     /**
      * Add an item to the registry
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\Tokenizer $tokenizer The tokeniter
-     * to be added
+     * @param Tokenizer $tokenizer The tokeniter to be added
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry
+     * @return TokenizerRegistry
      */
     public function add(Tokenizer $tokenizer)
     {
-        if (! in_array($tokenizer, $this->_registry)) {
-            $this->_registry[] = $tokenizer;
+        if (! in_array($tokenizer, $this->registry)) {
+            $this->registry[] = $tokenizer;
         }
 
         return $this;
     }
 
     /**
-     * Get a dictionary entry by it's key
+     * Get a dictionary entry by its key
      *
      * @param mixed $key The key to get the tokenizer for.
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Tokenizer
+     * @return Tokenizer|null
      */
     public function getTokenizerWithKey($key)
     {
-        if (array_key_exists($key, $this->_registry)) {
-            return $this->_registry[$key];
+        if (array_key_exists($key, $this->registry)) {
+            return $this->registry[$key];
         }
 
         return null;
@@ -91,11 +93,11 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Cleanup the registry
      *
-     * @return Tokenizer\TokenizerRegistry
+     * @return TokenizerRegistry
      */
     public function cleanup()
     {
-        $this->_registry = array();
+        $this->registry = array();
 
         return $this;
     }
@@ -103,9 +105,9 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Pass the given string through the given tokenizers
      *
-     * @param string $string The String to be tokenized
+     * @param string|TokenRegistry $string The String to be tokenized
      *
-     * @return \Org\Heigl\Hyphenator\TokenRegistry
+     * @return TokenRegistry
      */
     public function tokenize($string)
     {
@@ -122,75 +124,75 @@ class TokenizerRegistry implements \Iterator, \Countable
     }
 
     /**
-     * Implementation of \Iterator
+     * Implementation of Iterator
      *
-     * @see \Iterator::rewind()
+     * @see Iterator::rewind()
      *
      * @return void
      */
     public function rewind()
     {
-        reset($this->_registry);
+        reset($this->registry);
     }
 
     /**
      * Get the current object
      *
-     * @see \Iterator::current()
+     * @see Iterator::current()
      *
-     * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
+     * @return Tokenizer
      */
     public function current()
     {
-        return current($this->_registry);
+        return current($this->registry);
     }
 
     /**
      * Get the current key
      *
-     * @see \Iterator::key()
+     * @see Iterator::key()
      *
      * @return mixed
      */
     public function key()
     {
-        return key($this->_registry);
+        return key($this->registry);
     }
 
     /**
      * Get the number of items in the registry
      *
-     * @see \Countable::count()
+     * @see Countable::count()
      *
      * @return int
      */
     public function count()
     {
-        return count($this->_registry);
+        return count($this->registry);
     }
 
     /**
      * Push the internal pointer forward one step
      *
-     * @see \Iterator::next()
+     * @see Iterator::next()
      *
      * @return void
      */
     public function next()
     {
-        next($this->_registry);
+        next($this->registry);
     }
 
     /**
      * Check whether the current pointer is in a valid place
      *
-     * @see \Iterator::valid()
+     * @see Iterator::valid()
      *
      * @return boolean
      */
     public function valid()
     {
-        if (false === current($this->_registry)) {
+        if (false === current($this->registry)) {
             return false;
         }
 

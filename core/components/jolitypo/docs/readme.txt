@@ -1,8 +1,6 @@
-Snippet: jolitypo
---------------------
-Author: Jens Wittmann <kontakt@jens-wittmann.de>
+## JoliTypo
 
-This snippet uses JoliTypo for Microtypography fix as output modifer.
+Use JoliTypo for Microtypography as Output Filter in MODX.
 
-Official Documentation:
-https://github.com/jolicode/JoliTypo
+Author: [Jens Wittmann](https://jens-wittmann.de)
+Official Documentation: https://github.com/jolicode/JoliTypo

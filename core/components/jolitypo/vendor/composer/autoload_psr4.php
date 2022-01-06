@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Org\\Heigl\\Hyphenator\\' => array($vendorDir . '/org_heigl/hyphenator/src'),
-    'JoliTypo\\' => array($vendorDir . '/jolicode/jolitypo'),
+    'JoliTypo\\' => array($vendorDir . '/jolicode/jolitypo/src/JoliTypo'),
 );

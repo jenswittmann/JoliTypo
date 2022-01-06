@@ -1,5 +1,13 @@
-Changelog for jolitypo.
+## JoliTypo 1.0.0
 
-jolitypo 0.9.0
-====================================
+Released on 2022-01-06
+
+- move config completely to system_settings
+- update JoliTypo to 1.2.0
+- add custom replaces 
+
+## JoliTypo 0.9.0
+
+Released on 2019-01-03
+
 - initial commit

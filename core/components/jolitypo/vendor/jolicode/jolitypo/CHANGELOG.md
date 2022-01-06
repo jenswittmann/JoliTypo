@@ -1,6 +1,29 @@
 CHANGELOG
 =========
 
+### 1.2.0 (2021-08-30) ###
+
+* Switch from Travis to GitHub Action
+* Bump `org_heigl/hyphenator` to 2.6.1
+* Drop support for PHP <= 7.2
+
+### 1.1.0 (2020-04-11) ###
+
+* drop Symfony 2 support for the Bundle
+* add Symfony 5 support for the Bundle
+* better tests
+* fix a full DOM dump error occurring on Ubuntu PHP 7.3
+
+### 1.0.5 (2019-07-01) ###
+
+* add an exception for "de-ch" SmartQuote style
+* fix deprecation messages in Symfony
+
+### 1.0.4 (2018-11-26) ###
+
+* fix Bundle namespace
+* PHP minimum required version is now 5.6
+
 ### 1.0.3 (2018-09-04) ###
 
 * add built-in support for Symfony and Twig

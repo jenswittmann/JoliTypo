@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => NULL,
+        'name' => '__root__',
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => NULL,
+            'dev_requirement' => false,
+        ),
+        'jolicode/jolitypo' => array(
+            'pretty_version' => '1.2.0',
+            'version' => '1.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../jolicode/jolitypo',
+            'aliases' => array(),
+            'reference' => 'f9fb29367f7615766cb15311a3ce37edd2643b94',
+            'dev_requirement' => false,
+        ),
+        'org_heigl/hyphenator' => array(
+            'pretty_version' => 'v2.6.1',
+            'version' => '2.6.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../org_heigl/hyphenator',
+            'aliases' => array(),
+            'reference' => '9e21ebd14300693b1178dd080f718df721dc4f68',
+            'dev_requirement' => false,
+        ),
+    ),
+);

@@ -33,7 +33,6 @@
 
 namespace Org\Heigl\Hyphenator;
 
-use \Org\Heigl\Hyphenator\Exception;
 use \Org\Heigl\Hyphenator\Tokenizer\Tokenizer;
 use \Org\Heigl\Hyphenator\Filter\Filter;
 
@@ -57,82 +56,82 @@ class Options
      *
      * This string has to be prepend to the word in question
      *
-     * @var string _noHyphenateString
+     * @var string noHyphenateString
      */
-    protected $_noHyphenateString = null;
+    private $noHyphenateString = '';
 
     /**
      * This property defines the default hyphenation-character.
      *
      * By default this is the soft-hyphen character U+00AD
      *
-     * @var string $_hyphen
+     * @var string $hyphen
      */
-    protected $_hyphen = "\xAD";
+    private $hyphen = "\xAD";
 
     /**
      * How many chars to stay to the left of the first hyphenation of a word.
      *
      * By default this is 2 characters
      *
-     * @var int $_leftmin
+     * @var int $leftmin
      */
-    protected $_leftMin = 2;
+    private $leftMin = 2;
 
     /**
      * How many chars to stay to the right of the last hyphenation of a word.
      *
      * By default this is 2 characters
      *
-     * @var int $_rightmin
+     * @var int $rightmin
      */
-    protected $_rightMin = 2;
+    private $rightMin = 2;
 
     /**
      * Minimum Word length for Hyphenation.
      *
      * This defaults to 6 Characters.
      *
-     * @var int $_wordMin
+     * @var int $wordMin
      */
-    protected $_wordMin = 6;
+    private $wordMin = 6;
 
     /**
      * The currently set quality for hyphenation.
      *
      * The higher the number, the better the hyphenation is
      *
-     * @var int $_quality
+     * @var int $quality
      */
-    protected $_quality = 9;
+    private $quality = 9;
 
     /**
      * The String that shall be searched for as a customHyphen.
      *
-     * @var string $_customHyphen
+     * @var string $customHyphen
      */
-    protected $_customHyphen = '--';
+    private $customHyphen = '--';
 
     /**
      * The filters to be used to postprocess the hyphenations.
      *
-     * @var array $_filters
+     * @var array $filters
      */
-    protected $_filters = array();
+    private $filters = array();
 
     /**
      * The tokenizers to use.
      *
-     * @var array $_tokenizers
+     * @var array $tokenizers
      */
-    protected $_tokenizers = array();
+    private $tokenizers = array();
 
     /**
-     * THe locale to be used.
+     * The locale to be used.
      *
-     * @var string $_locale
+     * @var string $defaultLocale
      */
-    protected $_defaultLocale = 'en_EN';
+    private $defaultLocale = 'en_EN';
 
     /**
      * Set the String that marks a word as not to be hyphenated
@@ -144,7 +143,7 @@ class Options
      */
     public function setNoHyphenateString($noHyphenateString)
     {
-        $this->_noHyphenateString = $noHyphenateString;
+        $this->noHyphenateString = (string) $noHyphenateString;
 
         return $this;
     }
@@ -156,7 +155,7 @@ class Options
      */
     public function getNoHyphenateString()
     {
-        return $this->_noHyphenateString;
+        return $this->noHyphenateString;
     }
 
     /**
@@ -168,7 +167,7 @@ class Options
      */
     public function setHyphen($hyphen)
     {
-        $this->_hyphen = $hyphen;
+        $this->hyphen = (string) $hyphen;
 
         return $this;
     }
@@ -180,7 +179,7 @@ class Options
      */
     public function getHyphen()
     {
-        return $this->_hyphen;
+        return $this->hyphen;
     }
 
     /**
@@ -192,7 +191,7 @@ class Options
      */
     public function setLeftMin($leftMin)
     {
-        $this->_leftMin = (int) $leftMin;
+        $this->leftMin = (int) $leftMin;
 
         return $this;
     }
@@ -204,7 +203,7 @@ class Options
      */
     public function getLeftMin()
     {
-        return (int) $this->_leftMin;
+        return $this->leftMin;
     }
 
     /**
@@ -216,7 +215,7 @@ class Options
      */
     public function setRightMin($rightMin)
     {
-        $this->_rightMin = (int) $rightMin;
+        $this->rightMin = (int) $rightMin;
 
         return $this;
     }
@@ -228,7 +227,7 @@ class Options
      */
     public function getRightMin()
     {
-        return (int) $this->_rightMin;
+        return $this->rightMin;
     }
 
     /**
@@ -242,7 +241,7 @@ class Options
      */
     public function setMinWordLength($minLength)
     {
-        $this->_wordMin = (int) $minLength;
+        $this->wordMin = (int) $minLength;
 
         return $this;
     }
@@ -268,9 +267,19 @@ class Options
      */
     public function setQuality($quality)
     {
-        $this->_quality = (int) $quality;
+        $this->quality = (int) $quality;
 
         return $this;
+    }
+
+    /**
+     * Get the hyphenation-quality
+     *
+     * @return int
+     */
+    public function getQuality()
+    {
+        return $this->quality;
     }
 
     /**
@@ -280,7 +289,7 @@ class Options
      */
     public function getMinWordLength()
     {
-        return (int) $this->_wordMin;
+        return $this->wordMin;
     }
 
     /**
@@ -288,13 +297,13 @@ class Options
      *
      * These will be replaced by the set hyphenation character
      *
-     * @param array $customHyphen The custom hyphenation-character
+     * @param string $customHyphen The custom hyphenation-character
      *
-     * @return \Org\Heigl\Hyphenator\Options
+     * @return Options
      */
     public function setCustomHyphen($customHyphen)
     {
-        $this->_customHyphen = (string) $customHyphen;
+        $this->customHyphen = (string) $customHyphen;
 
         return $this;
     }
@@ -306,7 +315,7 @@ class Options
      */
     public function getCustomHyphen()
     {
-        return $this->_customHyphen;
+        return $this->customHyphen;
     }
 
     /**
@@ -319,7 +328,7 @@ class Options
      */
     public function setFilters($filters)
     {
-        $this->_filters = array();
+        $this->filters = array();
         if (! is_array($filters)) {
             $filters = explode(',', $filters);
         }
@@ -348,7 +357,7 @@ class Options
         if (! $filter) {
             return $this;
         }
-        $this->_filters[] = $filter;
+        $this->filters[] = $filter;
 
         return $this;
     }
@@ -360,7 +369,7 @@ class Options
      */
     public function getFilters()
     {
-        return $this->_filters;
+        return $this->filters;
     }
 
     /**
@@ -372,7 +381,7 @@ class Options
      */
     public function setTokenizers($tokenizers)
     {
-        $this->_tokenizers = array();
+        $this->tokenizers = array();
         if (! is_array($tokenizers)) {
             $tokenizers = explode(',', $tokenizers);
         }
@@ -388,20 +397,22 @@ class Options
      *
      * @param string|Tokenizer $tokenizer The tokenizer to add
      *
-     * @return \Org\Heigl\Hyphenator\Options
+     * @return self
      */
     public function addTokenizer($tokenizer)
     {
         if (is_string($tokenizer)) {
             $tokenizer = trim($tokenizer);
         } elseif (! $tokenizer instanceof Tokenizer) {
-            throw new \UnexpectedValueException('Expceted instanceof Org\Heigl\Hyphenator\Tokenizer\Tokenizer or string');
+            throw new \UnexpectedValueException(
+                'Expceted instanceof Org\Heigl\Hyphenator\Tokenizer\Tokenizer or string'
+            );
         }
 
         if (! $tokenizer) {
             return $this;
         }
-        $this->_tokenizers[] = $tokenizer;
+        $this->tokenizers[] = $tokenizer;
 
         return $this;
     }
@@ -413,7 +424,7 @@ class Options
      */
     public function getTokenizers()
     {
-        return $this->_tokenizers;
+        return $this->tokenizers;
     }
 
     /**
@@ -458,7 +469,7 @@ class Options
      */
     public function setDefaultLocale($locale)
     {
-        $this->_defaultLocale = (string) $locale;
+        $this->defaultLocale = (string) $locale;
 
         return $this;
     }
@@ -470,6 +481,6 @@ class Options
      */
     public function getDefaultLocale()
     {
-        return $this->_defaultLocale;
+        return $this->defaultLocale;
     }
 }
