@@ -1,8 +1,5 @@
 {
     "name": "jenswittmann/jolitypo",
     "description": "Use JoliTypo for Microtypography as Output Filter in MODX.",
-    "author": "Jens Wittmann <kontakt@jens-wittmann.de>",
-    "require": {
-        "jolicode/jolitypo": "*"
-    }
+    "author": "Jens Wittmann <kontakt@jens-wittmann.de>"
 }
