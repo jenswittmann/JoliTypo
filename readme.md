@@ -2,7 +2,7 @@
 
 Use JoliTypo for Microtypography as Output Filter in MODX.
 
-Author: [Jens Wittmann](https://jens-wittmann.de)  
+Download Extra via Package Installer: https://extras.modx.com/package/jolitypo  
 Official JoliTypo Documentation: https://github.com/jolicode/JoliTypo
 
 ## System Settings
