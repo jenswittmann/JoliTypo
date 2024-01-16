@@ -4,37 +4,37 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c47cba3c153866a713cb3903e11b17f",
+    "content-hash": "358c229381a6a6ab5417683080b4a9cb",
     "packages": [
         {
             "name": "jolicode/jolitypo",
-            "version": "1.2.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jolicode/JoliTypo.git",
-                "reference": "f9fb29367f7615766cb15311a3ce37edd2643b94"
+                "reference": "d85b1076486b6886f1a16943d032d11b9c06c78d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/f9fb29367f7615766cb15311a3ce37edd2643b94",
-                "reference": "f9fb29367f7615766cb15311a3ce37edd2643b94",
+                "url": "https://api.github.com/repos/jolicode/JoliTypo/zipball/d85b1076486b6886f1a16943d032d11b9c06c78d",
+                "reference": "d85b1076486b6886f1a16943d032d11b9c06c78d",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "lib-libxml": "*",
-                "org_heigl/hyphenator": "~2.6.0",
-                "php": ">=7.2.0"
+                "org_heigl/hyphenator": "^2.6 || ^3.0",
+                "php": ">=7.4"
             },
             "conflict": {
                 "ext-apc": "3.1.11"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2",
-                "symfony/framework-bundle": "^3.4.26|^4.1.12|^5.0",
-                "symfony/phpunit-bridge": "^5.0",
-                "symfony/twig-bundle": "^3.4.26|^4.1.12|^5.0",
-                "symfony/yaml": "^3.4.26|^4.1.12|^5.0"
+                "friendsofphp/php-cs-fixer": "^3.3.2",
+                "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.0",
+                "symfony/phpunit-bridge": "^5.4.8 || ^6.0",
+                "symfony/twig-bundle": "^4.4 || ^5.0 || ^6.0",
+                "symfony/yaml": "^4.4 || ^5.0 || ^6.0"
             },
             "type": "library",
             "autoload": {
@@ -64,22 +64,22 @@
             ],
             "support": {
                 "issues": "https://github.com/jolicode/JoliTypo/issues",
-                "source": "https://github.com/jolicode/JoliTypo/tree/1.2.0"
+                "source": "https://github.com/jolicode/JoliTypo/tree/v1.4.0"
             },
-            "time": "2021-08-30T10:09:20+00:00"
+            "time": "2022-12-22T08:29:45+00:00"
         },
         {
             "name": "org_heigl/hyphenator",
-            "version": "v2.6.1",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heiglandreas/Org_Heigl_Hyphenator.git",
-                "reference": "9e21ebd14300693b1178dd080f718df721dc4f68"
+                "reference": "d8bcb8cefff21c9de3a77ec4de1750f0230a6494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/9e21ebd14300693b1178dd080f718df721dc4f68",
-                "reference": "9e21ebd14300693b1178dd080f718df721dc4f68",
+                "url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Hyphenator/zipball/d8bcb8cefff21c9de3a77ec4de1750f0230a6494",
+                "reference": "d8bcb8cefff21c9de3a77ec4de1750f0230a6494",
                 "shasum": ""
             },
             "require": {
@@ -116,9 +116,9 @@
             ],
             "support": {
                 "issues": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/issues",
-                "source": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/tree/v2.6.1"
+                "source": "https://github.com/heiglandreas/Org_Heigl_Hyphenator/tree/v3.0.0"
             },
-            "time": "2020-12-22T15:12:35+00:00"
+            "time": "2022-05-21T08:58:29+00:00"
         }
     ],
     "packages-dev": [],
@@ -129,5 +129,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.0.0"
 }
