@@ -1,3 +1,5 @@
+<?php
+
 /**
  * JoliTypo for MODX
  *
@@ -9,6 +11,10 @@
  * @var modX $modx
  * @var array $scriptProperties
  */
+
+require_once $corePath . "vendor/autoload.php";
+
+use JoliTypo\Fixer;
 
 # vars
 $corePath = $modx->getOption(
@@ -22,10 +28,6 @@ $joliOptions = empty($snippetOptions)
     : $snippetOptions;
 $lang = $modx->getOption("jolitypo.locale");
 $customReplaces = $modx->getOption("jolitypo.customReplaces");
-
-# include JoliTypo Class
-require_once $corePath . "vendor/autoload.php";
-use JoliTypo\Fixer;
 
 # init JoliTypo
 $fixer = new Fixer(explode(" ", $joliOptions));
