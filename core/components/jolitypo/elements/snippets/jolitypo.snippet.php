@@ -44,4 +44,4 @@ if (!empty($customReplaces)) {
 # run JoliTypo and return
 $input = $fixer->fix($input);
 
-return $input;
+return urldecode($input);
