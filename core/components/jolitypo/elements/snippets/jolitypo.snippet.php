@@ -47,4 +47,9 @@ if (!empty($customReplaces)) {
 # run JoliTypo and return
 $input = $fixer->fix($input);
 
+# prevent URL gets encoded in links #4
+$input = preg_replace_callback("/<a(.*?)href=\"([^\"]+)\"(.*?)>/i", function($matches) {
+    return "<a" . $matches[1] . "href=\"" . urldecode($matches[2]) . "\"" . $matches[3] . ">";
+}, $input);
+
 return $input;
