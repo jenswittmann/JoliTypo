@@ -3,7 +3,7 @@
     "lowCaseName": "jolitypo",
     "description": "JoliTypo  Microtypography as output modifer for MODX",
     "author": "Jens Wittmann",
-    "version": "1.1.1-pl",
+    "version": "1.2.0-pl",
     "package": {
         "elements": {
             "snippets": [

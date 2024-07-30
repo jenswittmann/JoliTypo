@@ -1,3 +1,9 @@
+## JoliTypo 1.2.0
+
+Released on 2024-07-30
+
+- bugfix: prevent MODX URL modifier gets encoded in links when pdoTools are installed (#4)
+
 ## JoliTypo 1.1.1
 
 Released on 2024-03-12
