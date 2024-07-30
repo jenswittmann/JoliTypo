@@ -1,3 +1,4 @@
 core/components/jolitypo/vendor/
 /core/components/jolitypo/.DS_Store
 .nova/
+.DS_Store
